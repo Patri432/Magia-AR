@@ -6,6 +6,24 @@
     <title>Magia AR</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <script>
+      AFRAME.registerComponent('force-animation', {
+        init: function () {
+          var model = this.el;
+          model.addEventListener('model-loaded', function () {
+            var mixer = model.components['animation-mixer'];
+            if (mixer) {
+              mixer.stopAction();
+              model.setAttribute('animation-mixer', {
+                clip: '*',
+                loop: 'repeat',
+                crossFadeDuration: 0.4
+              });
+            }
+          });
+        }
+      });
+    </script>
   </head>
   <body style="margin:0; overflow:hidden;">
     <a-scene
@@ -15,7 +33,7 @@
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false">
 
-      <a-assets timeout="10000">
+      <a-assets timeout="30000">
         <a-asset-item id="pintura" src="./Pintura.glb"></a-asset-item>
       </a-assets>
 
@@ -27,7 +45,8 @@
           position="0 0.5 0"
           scale="3 3 3"
           rotation="0 90 0"
-          animation-mixer="clip: *; loop: repeat; crossFadeDuration: 0.4">
+          animation-mixer="clip: *; loop: repeat; crossFadeDuration: 0.4"
+          force-animation>
         </a-gltf-model>
       </a-entity>
 
