@@ -4,39 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Magia AR</title>
-
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
-    <style>
-      html, body {
-        margin: 0;
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-      }
-      a-scene {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-
-    <script>
-      AFRAME.registerComponent('force-animation', {
-        init: function () {
-          var el = this.el;
-          el.addEventListener('model-loaded', function () {
-            setTimeout(function() {
-              el.setAttribute('animation-mixer', {
-                clip: '*',
-                loop: 'repeat',
-                crossFadeDuration: 0.4
-              });
-            }, 200);
-          });
-        }
-      });
-    </script>
   </head>
 
   <body style="margin:0; overflow:hidden;">
@@ -62,7 +29,7 @@
           src="#pintura"
           position="0 0 0"
           scale="3 3 3"
-          rotation="0 0 0"
+          rotation="0 90 0"
           animation-mixer="clip: *; loop: repeat; crossFadeDuration: 0.4"
           force-animation>
         </a-gltf-model>
@@ -70,3 +37,36 @@
     </a-scene>
   </body>
 </html>
+
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+<style>
+  html, body {
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+  a-scene {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  AFRAME.registerComponent('force-animation', {
+    init: function () {
+      var el = this.el;
+      el.addEventListener('model-loaded', function () {
+        setTimeout(function() {
+          el.setAttribute('animation-mixer', {
+            clip: '*',
+            loop: 'repeat',
+            crossFadeDuration: 0.4
+          });
+        }, 200);
+      });
+    }
+  });
+</script>
