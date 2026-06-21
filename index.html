@@ -4,52 +4,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Magia AR</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+    <style>
+      html, body {
+        margin: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+      }
+      a-scene {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+
     <script>
       AFRAME.registerComponent('force-animation', {
         init: function () {
-          var model = this.el;
-          model.addEventListener('model-loaded', function () {
-            var mixer = model.components['animation-mixer'];
-            if (mixer) {
-              mixer.stopAction();
-              model.setAttribute('animation-mixer', {
+          var el = this.el;
+          el.addEventListener('model-loaded', function () {
+            setTimeout(function() {
+              el.setAttribute('animation-mixer', {
                 clip: '*',
                 loop: 'repeat',
                 crossFadeDuration: 0.4
               });
-            }
+            }, 200);
           });
         }
       });
     </script>
   </head>
+
   <body style="margin:0; overflow:hidden;">
     <a-scene
-      mindar-image="imageTargetSrc: ./targets.mind; autoStart: true;"
+      mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiLoading: yes; uiError: yes; uiScanning: yes;"
       color-space="sRGB"
-      renderer="colorManagement: true"
+      renderer="colorManagement: true; physicallyCorrectLights: true;"
       vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: false">
+      device-orientation-permission-ui="enabled: false"
+      embedded>
 
-      <a-assets timeout="30000">
+      <a-assets timeout="60000">
         <a-asset-item id="pintura" src="./pintura.glb"></a-asset-item>
       </a-assets>
+
+      <a-light type="ambient" color="#ffffff" intensity="1.5"></a-light>
+      <a-light type="directional" color="#ffffff" intensity="1" position="1 3 2"></a-light>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
         <a-gltf-model
           src="#pintura"
-          position="0 0.5 0"
+          position="0 0 0"
           scale="3 3 3"
-          rotation="0 90 0"
+          rotation="0 0 0"
           animation-mixer="clip: *; loop: repeat; crossFadeDuration: 0.4"
           force-animation>
         </a-gltf-model>
       </a-entity>
-
     </a-scene>
   </body>
 </html>
